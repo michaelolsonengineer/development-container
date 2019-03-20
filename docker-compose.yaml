@@ -1,18 +1,22 @@
 version: "3.4"
-  services:
-    main:
-      #image: ubuntu:16.04
-      build:
-        context: ./
-        dockerfile: Dockerfile
-        labels:
-          - "ntc.description=File/Terminal server to access container"
-          - "ntc.builds.amss=apps"
-      command: /bin/sh -c "sudo sysctl fs.inotify.max_user_watches=524288 && sudo sysctl -p && /usr/local/bin/jupyter notebook --ip=0.0.0.0 --port=8888"
-      ports:
-        - "9999:8888"
-      privileged: true
-      environment:
-      volumes:
-        - '/opt/cross:/opt/cross'
-        - '/var/shared:/var/shared'
+services:
+  devbox:
+    #image: ubuntu:16.04
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      labels:
+        - "devbox.description=File/Terminal server to access development container"
+    command: /usr/local/bin/jupyter notebook --ip=0.0.0.0 --port=8888
+    ports:
+      - "9999:8888"
+    privileged: true
+    volumes:
+      - "${HOME}/.ssh:/var/shared/.ssh"
+      - "${HOME}/.bash_history:/var/shared/.bash_history"
+      - "${HOME}/.subversion:/var/shared/.subversion"
+      - "${HOME}/.gitconfig:/var/shared/.gitconfig"
+      - "${HOME}/.gitignore_global:/var/shared/.gitignore_global"
+      - "${HOME}/.dotfiles:/var/shared/.dotfiles"
+      - "${HOME}/.vim_runtime:/var/shared/.vim_runtime"
+      - ".:/var/shared/build_code"

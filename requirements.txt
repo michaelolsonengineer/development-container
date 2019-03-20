@@ -7,3 +7,4 @@ jupyter_contrib_nbextensions
 jinja2
 xlrd
 autopep8
+hexdump
