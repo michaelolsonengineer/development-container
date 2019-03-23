@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
       labels:
         - "devbox.description=File/Terminal server to access development container"
+    entrypoint: ["/docker-entrypoint.sh"]
     command: /usr/local/bin/jupyter notebook --ip=0.0.0.0 --port=8888
     ports:
       - "9999:8888"
